@@ -6,6 +6,7 @@ import path from 'path';
 // https://vite.dev/config/
 export default defineConfig(() => {
   const config = {
+    base: "/",
     plugins: [react(), svgr()],
     define: {},
     resolve: {
