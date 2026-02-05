@@ -15,6 +15,24 @@ const AnnualHires = ({
 				['annualHires']: {
 					...prevState['annualHires'],
 					totalYearlyHiringLimit: durationValue
+				},
+				['voiceCalling']: {
+					...prevState['voiceCalling'],
+					totalCallDurationLimit: multiplication(
+						multiplication(
+							durationValue,
+							prevState['annualHires']['profilesProcessedPerHire']
+						), 0.35
+					)
+				},
+				['aiInterview']: {
+					...prevState['aiInterview'],
+					totalCallDurationLimit: multiplication(
+						multiplication(
+							durationValue,
+							prevState['annualHires']['profilesProcessedPerHire']
+						), 0.1
+					)
 				}
 			})
 		);
@@ -57,7 +75,25 @@ const AnnualHires = ({
 											...prevState,
 											['annualHires']: {
 												...prevState['annualHires'],
-												totalYearlyHiringLimit: e.target.value
+												totalYearlyHiringLimit: e.target.value,
+											},
+											['voiceCalling']: {
+												...prevState['voiceCalling'],
+												totalCallDurationLimit: multiplication(
+													multiplication(
+													   e.target.value,
+													   prevState['annualHires']['profilesProcessedPerHire']
+												   ), 0.35
+												)
+											},
+											['aiInterview'] : {
+												...prevState['aiInterview'],
+												totalCallDurationLimit: multiplication(
+													multiplication(
+														e.target.value,
+														prevState['annualHires']['profilesProcessedPerHire']
+													), 0.1
+												)
 											}
 										})
 									);
@@ -84,6 +120,24 @@ const AnnualHires = ({
 											['annualHires']: {
 												...prevState['annualHires'],
 												profilesProcessedPerHire: e.target.value
+											},
+											['voiceCalling']: {
+												...prevState['voiceCalling'],
+												totalCallDurationLimit: multiplication(
+													multiplication(
+														e.target.value,
+														prevState['annualHires']['totalYearlyHiringLimit']
+													), 0.35
+												)
+											},
+											['aiInterview']: {
+												...prevState['aiInterview'],
+												totalCallDurationLimit: multiplication(
+													multiplication(
+														e.target.value,
+														prevState['annualHires']['totalYearlyHiringLimit']
+													), 0.1
+												)
 											}
 										})
 									);

@@ -51,7 +51,7 @@ const AitInterview = ({
 							disabled={!estimation.aiInterview.activeAddOn}
 						/>
 
-						<div className={`input-container__information`}>Default: 7,000 min (10% of profiles).</div>
+						{/* <div className={`input-container__information`}>Default: 7,000 min (10% of profiles).</div> */}
 					</div>
 
 					<div className={`input-container`}>

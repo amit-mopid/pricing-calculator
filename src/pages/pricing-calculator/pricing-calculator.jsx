@@ -22,13 +22,13 @@ const PricingCalculator = ({
 		},
 		aiInterview: {
 			activeAddOn: true,
-			totalCallDurationLimit: 7000,
-			costPerMinute: 5
+			totalCallDurationLimit: 2000,
+			costPerMinute: 14
 		},
 		sourcingOutreach: {
 			activeAddOn: true,
-			creditLimit: 50,
-			costPerCredit: 5
+			creditLimit: 1000,
+			costPerCredit: 8
 		},
 		adsBasedSourcing: {
 			activeAddOn: true,

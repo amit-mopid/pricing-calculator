@@ -28,7 +28,45 @@ const SalesDiscount = ({
 						<div className={`label-2`}>Applies after all tier discounts</div>
 					</div>
 
-					<div className={`right-section`}>{estimation.salesDiscount.discountPercent}%</div>
+					<div className={`right-section`}>
+						<input
+							className="right-section__input"
+							type="number"
+							min={0}
+							max={99}
+							value={estimation.salesDiscount.discountPercent}
+							onChange={(e) => {
+								const value = e.target.value;
+
+								// allow empty input while typing
+								if (value === '') {
+									setEstimation((prev) => ({
+										...prev,
+										salesDiscount: {
+											...prev.salesDiscount,
+											discountPercent: ''
+										}
+									}));
+									return;
+								}
+
+								const num = Number(value);
+
+								// block values outside 0–30
+								if (num < 0 || num > 99) return;
+
+								setEstimation((prev) => ({
+									...prev,
+									salesDiscount: {
+										...prev.salesDiscount,
+										discountPercent: num
+									}
+								}));
+							}}
+						/>
+
+						%
+					</div>
 				</div>
 
 				<DurationSlider
