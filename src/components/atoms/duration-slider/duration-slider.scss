@@ -1,0 +1,129 @@
+@use 'variables' as *;
+
+input[type="range"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    /*  slider progress trick  */
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+/* Track: webkit browsers */
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 19px;
+    background-color: $color-FFFFFF;
+    border-radius: 16px;
+}
+
+/* Track: Mozilla Firefox */
+input[type="range"]::-moz-range-track {
+    height: 15px;
+    background-color: $color-FFFFFF;
+    border-radius: 16px;
+}
+
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    height: 18.9px;
+    width: 18.9px;
+    background-color: $color-FFFFFF;
+    border-radius: 50%;
+    border: 2px solid $color-FD755E;
+    /*  slider progress trick  */
+    box-shadow: -407px 0 0 400px $color-FD755E;
+}
+
+
+/* Thumb: Firefox */
+input[type="range"]::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: $color-FFFFFF;
+    border-radius: 50%;
+    border: 1px solid $color-FD755E;
+    /*  slider progress trick  */
+    box-shadow: -407px 0 0 400px $color-FD755E;
+}
+
+
+/* ========================= Aesthetics ========================= */
+
+.wrapper {
+    background: $color-FFFFFF;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &__range {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+
+        &__range-container {
+            border: 1px solid $color-EEEEF0;
+            width: 100%;
+            display: flex;
+            padding: 4px 5px;
+            border-radius: 25px;
+        }
+
+        &__label-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 0 0 4px;
+
+            &__label-box {
+                width: 30px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-weight: 400;
+                cursor: pointer;
+
+                &__label {
+                    font-size: 12px;
+                    color: rgba($color-1F2937, 0.5);
+                }
+
+                // &__abbrev {
+                //     font-size: 12px;
+                //     color: $color-5F6377;
+                // }
+            }
+
+            .label-box-0 {
+                padding: 0 5px 0 0;
+            }
+
+            .label-box-1 {
+                padding: 0 4px 0 0;
+            }
+
+            .label-box-2 {
+                padding: 0 4px 0 0;
+            }
+
+            .label-box-3 {
+                padding: 0 4px 0 0;
+            }
+
+            .label-box-4 {
+                padding: 0 -5px 0 0;
+            }
+        }
+    }
+}

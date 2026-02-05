@@ -1,0 +1,80 @@
+@use 'variables' as *;
+
+.pricing-summary-wrapper {
+	border: 1px solid $color-FD755E;
+	background-color: $color-FFFFFF;
+	border-radius: 12px;
+	overflow: hidden;
+
+	&__label-container {
+		width: 100%;
+		padding: 24px;
+		font-family: 'Inter', sans-serif;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&__label {
+			font-weight: 600;
+			font-size: 18px;
+			color: $color-1F2937;
+		}
+
+		&__value {
+			font-weight: 500;
+			font-size: 14px;
+			color: $color-374151;
+		}
+	}
+
+	&__pricing-cards {
+		// border: 0.5px solid black;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+
+		.summary {
+			// border: 1px solid black;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-family: 'Inter', sans-serif;
+			// border-bottom: 1px solid #D8D8D8;
+			padding: 0 24px 5px 24px;
+
+			.left-section {
+				display: flex;
+				flex-direction: column;
+				font-weight: 500;
+				gap: 5px;
+
+				.label {
+					font-size: 18px;
+					color: $color-1F2937;
+				}
+				
+				.value-label {
+					font-size: 14px;
+					color: #86888A;
+				}
+			}
+		}
+	}
+
+	&__total-container {
+		width: 100%;
+		padding: 24px;
+		background-color: $color-FFEBE7;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-top: 1px solid $color-FD755E;
+
+		&__label {
+			font-family: 'Inter', sans-serif;
+			font-weight: 600;
+			font-size: 24px;
+			color: $color-1F2937;
+		}
+	}
+}

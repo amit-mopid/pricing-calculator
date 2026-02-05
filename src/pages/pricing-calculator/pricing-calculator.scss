@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+.pricing-calculator-wrapper {
+    width: 100dvw;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+}

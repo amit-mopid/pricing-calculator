@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+.sales-discount-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__label-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: 'Inter', sans-serif;
+
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            color: $color-1F2937;
+
+            .label-1 {
+                font-weight: 600;
+                font-size: 14px;
+            }
+            
+            .label-2 {
+                font-weight: 400;
+                font-size: 12px;
+                color: rgba($color-1F2937, 0.5);
+            }
+        }
+
+        .right-section {
+            font-size: 24px;
+            font-weight: 600;
+            color: $color-FD755E;
+        }
+    }
+}

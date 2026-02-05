@@ -1,0 +1,43 @@
+@use 'variables' as *;
+
+// ios-button variables
+$switch-container-width: 26px;
+$switch-container-height: 14.44px;
+$switch-container-padding: 1.44px;
+$circle-diameter: 11.56px;
+
+.switch-container {
+    width: $switch-container-width;
+    height: $switch-container-height;
+    border-radius: 50px;
+    background-color: $color-DDE1E6;
+    display: flex;
+    align-items: center;
+    padding: $switch-container-padding;
+    transition: background-color 0.3s ease-in-out;
+
+    &.active {
+        background-color: $color-FD755E;
+
+        .switch-circle {
+            transform: translateX($circle-diameter); // Shift the circle to the right
+        }
+    }
+
+    &.active-cursor {
+        cursor: pointer;
+    }
+
+    &.inActive-cursor {
+        cursor: default;
+    }
+
+    .switch-circle {
+        width: $circle-diameter;
+        height: $circle-diameter;
+        background-color: $color-FFFFFF;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(0);
+    }
+}

@@ -1,0 +1,7 @@
+@use 'variables' as *;
+
+.body-wrapper {
+    width: 100%;
+    height: calc(100% - 72px);
+    padding: 24px 24px 0 24px;
+}
