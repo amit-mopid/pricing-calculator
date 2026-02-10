@@ -31,7 +31,13 @@ const ScreenOne = ({
 			addOnString.push('Ads-Based Sourcing');
 		}
 
-		return addOnString.join(' + ')
+		// return addOnString.join(' + ') + `${Boolean(addOnString.length) ? ' + ' : ''}Unlimited AI Screening + AI Assessments + AI Scheduling`
+		return [
+			...addOnString,
+			'Unlimited AI Screening',
+			'AI Assessments',
+			'AI Scheduling'
+		];
 	};
 
 	return (
@@ -45,12 +51,23 @@ const ScreenOne = ({
 					<div className={`text-2`}>
 						<div className={`sub-text-1`}>for {estimation.companyName}</div>
 
-						{
-							Boolean(addOnsAppended(estimation))
-								? (
-									<div className={`sub-text-2`}>({addOnsAppended(estimation)})</div>
-								) : (<></>)
-						}
+						{/* <div className={`sub-text-2`}>({addOnsAppended(estimation)})</div> */}
+						<div className={`sub-text-2`}>
+							{
+								(addOnsAppended(estimation) || []).map(
+									(el, elIndex) => (
+										<div
+											key={`el-${elIndex}`}
+											className='list-content'
+										>
+											<div className='dot'></div>
+
+											<span className='content'>{el}</span>
+										</div>
+									)
+								)
+							}
+						</div>
 					</div>
 				</div>
 			</div >
@@ -171,7 +188,7 @@ const ScreenTwo = ({
 					<div className="up-content">
 						<Pricing
 							label={`Base Plan`}
-							label2={`Unlimited Screening + AI Assessments`}
+							label2={`Unlimited AI Screening + AI Assessments + AI Scheduling`}
 							value={estimation.annualHires.totalYearlyHiringLimit * estimation.annualHires.profilesProcessedPerHire * estimation.annualHires.costPerProfile}
 						/>
 
@@ -213,14 +230,22 @@ const ScreenTwo = ({
 								) : (<></>)
 						}
 
-						<Division />
+						{
+							Boolean(estimation.salesDiscount.discountPercent)
+								? (
+									<>
+										<Division />
 
-						<Pricing
-							label={`Custom Discount (-${estimation.salesDiscount.discountPercent}%)`}
-							label2={`Applies after all tier discounts`}
-							value={pricingCalculationSummary('DISCOUNT', estimation)}
-							type="DISCOUNT"
-						/>
+										<Pricing
+											label={`Custom Discount (-${estimation.salesDiscount.discountPercent}%)`}
+											label2={`Applies after all tier discounts`}
+											value={pricingCalculationSummary('DISCOUNT', estimation)}
+											type="DISCOUNT"
+										/>
+									</>
+								) : (<></>)
+						}
+
 					</div>
 
 					<div className="down-content">
