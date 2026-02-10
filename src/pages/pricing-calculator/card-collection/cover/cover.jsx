@@ -325,7 +325,7 @@ const Cover = ({
 
 		const formatCompanyName = estimation.companyName.toLowerCase().split(' ').join('-');
 
-		pdf.save(`${formatCompanyName}-pricing-invoice.pdf`);
+		pdf.save(`MOPID_X_${formatCompanyName}_pricing.pdf`);
 	}
 
 	useEffect(
