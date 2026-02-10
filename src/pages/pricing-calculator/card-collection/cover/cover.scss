@@ -69,9 +69,7 @@
                                 background-color: rgba(#1F2937, 0.7);
                             }
 
-                            .content {
-
-                            }
+                            // .content {}
                         }
                     }
                 }
@@ -154,7 +152,7 @@
                         &.add-ons-padding {
                             padding: 0 0 14px 0;
                         }
-                        
+
                         &.border-division {
                             border-bottom: 1px solid #D8D8D8;
                         }
@@ -185,12 +183,12 @@
 
                             }
                         }
-                        
+
                         .value {
                             font-weight: 600;
                             font-size: 16px;
                             color: $color-000000;
-                            
+
                             &.alert {
                                 color: #D13333;
                             }
@@ -246,8 +244,21 @@
                     }
 
                     .right {
-                        font-weight: 600;
-                        font-size: 26px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                        gap: 4px;
+                        
+                        .text-1 {
+                            font-weight: 600;
+                            font-size: 26px;
+                            
+                        }
+                        
+                        .text-2 {
+                            font-weight: 400;
+                            font-size: 12px;
+                        }
                     }
                 }
             }

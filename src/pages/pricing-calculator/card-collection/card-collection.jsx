@@ -7,6 +7,7 @@ import SourcingOutreach from './sourcing-outreach/sourcing-outreach';
 import AdsBasedSourcing from './ads-based-sourcing/ads-based-sourcing';
 import SalesDiscount from './sales-discount/sales-discount';
 import DownloadFile from '@/assets/images/download-file.svg?react';
+import RadioButton from '@/components/atoms/radio-button/radio-button';
 
 const CardCollection = ({
 	estimation = {},
@@ -83,11 +84,48 @@ const CardCollection = ({
 						}
 					/>
 
+					<div className={`timing-quotation`}>
+						<div className={`label`}>Download quotation for</div>
+
+						<div className={`radio-btn-container`}>
+							{
+								(estimation.timing || []).map(
+									(option, optionIndex) => (
+										<RadioButton
+											key={`radio-btn-${optionIndex}`}
+											label={option.label}
+											isActive={option.value}
+											handleActiveChange={
+												() => {
+													setEstimation(
+														(prevState) => ({
+															...prevState,
+															['timing']: prevState['timing'].map(
+																(selectedOption, selectedOptionIndex) => selectedOptionIndex === optionIndex
+																	? ({
+																		...selectedOption,
+																		['value']: true
+																	}) : ({
+																		...selectedOption,
+																		['value']: false
+																	})
+															)
+														})
+													)
+												}
+											}
+										/>
+									)
+								)
+							}
+						</div>
+					</div>
+
 					<button
-						className={`download-quotation-wrapper ${Boolean(estimation.companyName.length) ? 'active-button' : 'inactive-button'}`}
+						className={`download-quotation-wrapper ${Boolean(estimation.companyName.length) && estimation.timing.map((el) => el?.value).includes(true) ? 'active-button' : 'inactive-button'}`}
 						onClick={
 							() => {
-								if (Boolean(estimation.companyName.length)) setDownload(true)
+								if (Boolean(estimation.companyName.length) && estimation.timing.map((el) => el?.value).includes(true)) setDownload(true)
 							}
 						}
 					>

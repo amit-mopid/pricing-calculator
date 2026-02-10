@@ -37,7 +37,13 @@ const PricingCalculator = ({
 		salesDiscount: {
 			discountPercent: 10
 		},
-		companyName: ""
+		companyName: "",
+		timing: [
+			{ label: `Annual Pricing`, value: false, coverLabel: `Annual`, divideBy: 1, perLabel: `annual` },
+			{ label: `Half Yearly`, value: false, coverLabel: `Semi-Annual`, divideBy: 2, perLabel: `half-yearly` },
+			{ label: `Quarterly`, value: false, coverLabel: `Quarterly`, divideBy: 4, perLabel: `quarter` },
+			{ label: `Monthly`, value: false, coverLabel: `Monthly`, divideBy: 12, perLabel: `month` },
+		],
 	});
 
 	return (

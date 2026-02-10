@@ -1,0 +1,58 @@
+@use 'variables' as *;
+
+.radio-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7.33px;
+
+    .radio-button-outer-circle {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        transition: background-color 0.3s ease-in-out;
+        cursor: pointer;
+        
+        &.active-outer-circle {
+            background-color: $color-FD755E;
+        }
+        
+        &.inactive-outer-circle {
+            background-color: $color-D0D4DA;
+        }
+        
+        .radio-button-middle-circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: $color-FFFFFF;
+            display: grid;
+            place-items: center;
+            
+            .radio-button-inner-circle {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                transition: background-color 0.3s ease-in-out;
+                
+                &.active-inner-circle {
+                    background-color: $color-FD755E;
+                }
+                
+                &.inactive-inner-circle {
+                    background-color: $color-FFFFFF;
+                }
+            }
+        }
+    }
+
+    .radio-button-label {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: 13px;
+        color: $color-222C3A;
+        cursor: default;
+    }
+}

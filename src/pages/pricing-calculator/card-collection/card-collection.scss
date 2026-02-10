@@ -87,6 +87,27 @@
                 margin: 0 0 16px 0;
             }
 
+            .timing-quotation {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 0 0 20px 0;
+
+                .label {
+                    font-weight: 500;
+                    font-size: 14px;
+                    color: $color-1F2937;
+                }
+
+                .radio-btn-container {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+
             .download-quotation-wrapper {
                 width: 100%;
                 height: 46px;
@@ -105,7 +126,7 @@
                     background-color: rgba($color-FD755E, 1);
                     cursor: pointer;
                 }
-                
+
                 &.inactive-button {
                     background-color: rgba($color-FD755E, 0.5);
                     cursor: not-allowed;

@@ -9,7 +9,8 @@ import jsPDF from "jspdf";
 import { multiplication } from '@/utils/functions';
 
 const ScreenOne = ({
-	estimation = {}
+	estimation = {},
+	renderTimeLabel = () => {}
 }) => {
 	const addOnsAppended = (data) => {
 		let addOnString = [];
@@ -46,12 +47,11 @@ const ScreenOne = ({
 				<MopidLogo />
 
 				<div className={`text-section`}>
-					<div className={`text-1`}>Pricing Proposal</div>
+					<div className={`text-1`}>{renderTimeLabel('coverLabel')}<br />Pricing<br />Proposal</div>
 
 					<div className={`text-2`}>
 						<div className={`sub-text-1`}>for {estimation.companyName}</div>
 
-						{/* <div className={`sub-text-2`}>({addOnsAppended(estimation)})</div> */}
 						<div className={`sub-text-2`}>
 							{
 								(addOnsAppended(estimation) || []).map(
@@ -110,7 +110,8 @@ const Division = () => {
 };
 
 const ScreenTwo = ({
-	estimation = {}
+	estimation = {},
+	renderTimeLabel = () => { }
 }) => {
 
 	const getaddOnsList = () => {
@@ -119,25 +120,25 @@ const ScreenTwo = ({
 				isActiveAddOn: estimation.voiceCalling.activeAddOn,
 				label: `Voice Calling`,
 				label2: `${estimation.voiceCalling.totalCallDurationLimit} mins`,
-				value: multiplication(estimation.voiceCalling.totalCallDurationLimit, estimation.voiceCalling.costPerMinute)
+				value: (multiplication(estimation.voiceCalling.totalCallDurationLimit, estimation.voiceCalling.costPerMinute) / renderTimeLabel('divideBy')).toFixed(2)
 			},
 			{
 				isActiveAddOn: estimation.aiInterview.activeAddOn,
 				label: `AI Interview`,
 				label2: `${estimation.aiInterview.totalCallDurationLimit} mins`,
-				value: multiplication(estimation.aiInterview.totalCallDurationLimit, estimation.aiInterview.costPerMinute)
+				value: (multiplication(estimation.aiInterview.totalCallDurationLimit, estimation.aiInterview.costPerMinute) / renderTimeLabel('divideBy')).toFixed(2)
 			},
 			{
 				isActiveAddOn: estimation.sourcingOutreach.activeAddOn,
 				label: `Sourcing Outreach`,
 				label2: `${estimation.sourcingOutreach.creditLimit} Credits`,
-				value: multiplication(estimation.sourcingOutreach.creditLimit, estimation.sourcingOutreach.costPerCredit)
+				value: (multiplication(estimation.sourcingOutreach.creditLimit, estimation.sourcingOutreach.costPerCredit) / renderTimeLabel('divideBy')).toFixed(2)
 			},
 			{
 				isActiveAddOn: estimation.adsBasedSourcing.activeAddOn,
 				label: `Ads-Based Sourcing`,
 				label2: `Default Recharge for Ads-Based Sourcing`,
-				value: estimation.adsBasedSourcing.walletAmount
+				value: (estimation.adsBasedSourcing.walletAmount / renderTimeLabel('divideBy')).toFixed(2)
 			}
 		];
 	};
@@ -171,7 +172,9 @@ const ScreenTwo = ({
 		const discountPercent = data.salesDiscount.discountPercent || 0;
 		const discountAmount = (totalCost * discountPercent) / 100;
 
-		return returnType === 'DISCOUNT' ? discountAmount.toLocaleString('en-IN') : (totalCost - discountAmount).toLocaleString('en-IN')
+		return returnType === 'DISCOUNT' 
+			? (discountAmount / renderTimeLabel('divideBy')).toFixed(2).toLocaleString('en-IN')
+			: ((totalCost - discountAmount) / renderTimeLabel('divideBy')).toFixed(2).toLocaleString('en-IN')
 
 	};
 
@@ -181,7 +184,11 @@ const ScreenTwo = ({
 				<div className="top-content">
 					<div className="left-label">Pricing Summary</div>
 
-					<div className="right-label">{estimation.annualHires.totalYearlyHiringLimit} hires/year</div>
+					<div className="right-label">{estimation.annualHires.totalYearlyHiringLimit} hires/{
+						renderTimeLabel('perLabel') === 'annual' 
+							? 'year' 
+							: renderTimeLabel('perLabel')
+						}</div>
 				</div>
 
 				<div className="middle-content">
@@ -189,7 +196,9 @@ const ScreenTwo = ({
 						<Pricing
 							label={`Base Plan`}
 							label2={`Unlimited AI Screening + AI Assessments + AI Scheduling`}
-							value={estimation.annualHires.totalYearlyHiringLimit * estimation.annualHires.profilesProcessedPerHire * estimation.annualHires.costPerProfile}
+							value={
+								(Number(estimation.annualHires.totalYearlyHiringLimit * estimation.annualHires.profilesProcessedPerHire * estimation.annualHires.costPerProfile) / renderTimeLabel('divideBy')).toFixed(2)
+							}
 						/>
 
 						{
@@ -255,7 +264,11 @@ const ScreenTwo = ({
 							<div className="text-2">Prices are exclusive of taxes</div>
 						</div>
 
-						<div className="right">₹{pricingCalculationSummary('', estimation)}</div>
+						<div className="right">
+							<div className='text-1'>₹{pricingCalculationSummary('', estimation)}</div>
+
+							<div className='text-2'>per {renderTimeLabel('perLabel')}</div>
+						</div>
 					</div>
 				</div>
 
@@ -302,6 +315,12 @@ const Cover = ({
 	const screenOneRef = useRef(null);
 	const screenTwoRef = useRef(null);
 
+	const renderTimeLabel = (key) => {
+		return estimation.timing.find(
+			(el) => el.value === true
+		)[key];
+	};
+
 	const downloadPDF = async () => {
 		const pdf = new jsPDF("p", "mm", "a4");
 
@@ -342,14 +361,14 @@ const Cover = ({
 				className={`screen-1`}
 				ref={screenOneRef}
 			>
-				<ScreenOne estimation={estimation} />
+				<ScreenOne estimation={estimation} renderTimeLabel={renderTimeLabel} />
 			</div>
 
 			<div
 				className={`screen-2`}
 				ref={screenTwoRef}
 			>
-				<ScreenTwo estimation={estimation} />
+				<ScreenTwo estimation={estimation} renderTimeLabel={renderTimeLabel} />
 			</div>
 		</div>
 	);
