@@ -90,7 +90,7 @@ const SourcingOutreach = ({
 					₹{Boolean(estimation.sourcingOutreach.costPerCredit) ? estimation.sourcingOutreach.costPerCredit : 0}/min × {Boolean(estimation.sourcingOutreach.creditLimit) ? estimation.sourcingOutreach.creditLimit : 0}mins = <span
 						className={`summary-container__value__result`}
 					>
-						₹{multiplication(estimation.sourcingOutreach.costPerCredit, estimation.sourcingOutreach.creditLimit)}
+						₹{multiplication(estimation.sourcingOutreach.costPerCredit, estimation.sourcingOutreach.creditLimit).toLocaleString('en-IN')}
 					</span>
 				</div>
 			</div>

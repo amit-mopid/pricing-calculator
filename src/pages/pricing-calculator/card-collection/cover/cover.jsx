@@ -6,7 +6,7 @@ import ISO from '@/assets/images/ISO.svg?react';
 import SOC2 from '@/assets/images/SOC2.svg?react';
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { multiplication } from '@/utils/functions';
+import { multiplication, capitalizeWords } from '@/utils/functions';
 
 const ScreenOne = ({
 	estimation = {},
@@ -50,7 +50,7 @@ const ScreenOne = ({
 					<div className={`text-1`}>{renderTimeLabel('coverLabel')}<br />Pricing<br />Proposal</div>
 
 					<div className={`text-2`}>
-						<div className={`sub-text-1`}>for {estimation.companyName}</div>
+						<div className={`sub-text-1`}>for {capitalizeWords(estimation.companyName, ' ')}</div>
 
 						<div className={`sub-text-2`}>
 							{
@@ -113,32 +113,31 @@ const ScreenTwo = ({
 	estimation = {},
 	renderTimeLabel = () => { }
 }) => {
-
 	const getaddOnsList = () => {
 		return [
 			{
 				isActiveAddOn: estimation.voiceCalling.activeAddOn,
 				label: `Voice Calling`,
-				label2: `${estimation.voiceCalling.totalCallDurationLimit} mins`,
-				value: (multiplication(estimation.voiceCalling.totalCallDurationLimit, estimation.voiceCalling.costPerMinute) / renderTimeLabel('divideBy')).toFixed(2)
+				label2: `${Math.round(estimation.voiceCalling.totalCallDurationLimit)} mins`,
+				value: Math.round(multiplication(estimation.voiceCalling.totalCallDurationLimit, estimation.voiceCalling.costPerMinute) / renderTimeLabel('divideBy'))
 			},
 			{
 				isActiveAddOn: estimation.aiInterview.activeAddOn,
 				label: `AI Interview`,
-				label2: `${estimation.aiInterview.totalCallDurationLimit} mins`,
-				value: (multiplication(estimation.aiInterview.totalCallDurationLimit, estimation.aiInterview.costPerMinute) / renderTimeLabel('divideBy')).toFixed(2)
+				label2: `${Math.round(estimation.aiInterview.totalCallDurationLimit)} mins`,
+				value: Math.round(multiplication(estimation.aiInterview.totalCallDurationLimit, estimation.aiInterview.costPerMinute) / renderTimeLabel('divideBy'))
 			},
 			{
 				isActiveAddOn: estimation.sourcingOutreach.activeAddOn,
 				label: `Sourcing Outreach`,
 				label2: `${estimation.sourcingOutreach.creditLimit} Credits`,
-				value: (multiplication(estimation.sourcingOutreach.creditLimit, estimation.sourcingOutreach.costPerCredit) / renderTimeLabel('divideBy')).toFixed(2)
+				value: Math.round(multiplication(estimation.sourcingOutreach.creditLimit, estimation.sourcingOutreach.costPerCredit) / renderTimeLabel('divideBy'))
 			},
 			{
 				isActiveAddOn: estimation.adsBasedSourcing.activeAddOn,
 				label: `Ads-Based Sourcing`,
 				label2: `Default Recharge for Ads-Based Sourcing`,
-				value: (estimation.adsBasedSourcing.walletAmount / renderTimeLabel('divideBy')).toFixed(2)
+				value: Math.round(estimation.adsBasedSourcing.walletAmount / renderTimeLabel('divideBy'))
 			}
 		];
 	};
@@ -173,8 +172,8 @@ const ScreenTwo = ({
 		const discountAmount = (totalCost * discountPercent) / 100;
 
 		return returnType === 'DISCOUNT' 
-			? (discountAmount / renderTimeLabel('divideBy')).toFixed(2).toLocaleString('en-IN')
-			: ((totalCost - discountAmount) / renderTimeLabel('divideBy')).toFixed(2).toLocaleString('en-IN')
+			? Math.round(discountAmount / renderTimeLabel('divideBy'))
+			: Math.round((totalCost - discountAmount) / renderTimeLabel('divideBy'))
 
 	};
 
@@ -184,7 +183,7 @@ const ScreenTwo = ({
 				<div className="top-content">
 					<div className="left-label">Pricing Summary</div>
 
-					<div className="right-label">{estimation.annualHires.totalYearlyHiringLimit} hires/{
+					<div className="right-label">{Math.round(estimation.annualHires.totalYearlyHiringLimit / renderTimeLabel('divideBy'))} hires/{
 						renderTimeLabel('perLabel') === 'annual' 
 							? 'year' 
 							: renderTimeLabel('perLabel')
@@ -197,7 +196,15 @@ const ScreenTwo = ({
 							label={`Base Plan`}
 							label2={`Unlimited AI Screening + AI Assessments + AI Scheduling`}
 							value={
-								(Number(estimation.annualHires.totalYearlyHiringLimit * estimation.annualHires.profilesProcessedPerHire * estimation.annualHires.costPerProfile) / renderTimeLabel('divideBy')).toFixed(2)
+								Math.round(
+									multiplication(
+										estimation.annualHires.totalYearlyHiringLimit,
+										multiplication(
+											estimation.annualHires.profilesProcessedPerHire,
+											estimation.annualHires.costPerProfile
+										)
+									) / renderTimeLabel('divideBy')
+								)
 							}
 						/>
 
@@ -217,20 +224,22 @@ const ScreenTwo = ({
 													(getaddOnsList() || []).filter(
 														(el) => el.isActiveAddOn
 													).map(
-														(el, elIndex) => (
-															<Pricing
-																key={`summary-${elIndex}`}
-																label={el.label}
-																label2={el.label2}
-																value={el.value}
-																isAddOn={true}
-																totalAddOns={
-																	(getaddOnsList() || []).filter(
-																		(el) => el.isActiveAddOn
-																	).length - 1 > elIndex
-																}
-															/>
-														)
+														(el, elIndex) => {
+															return (
+																<Pricing
+																	key={`summary-${elIndex}`}
+																	label={el.label}
+																	label2={el.label2}
+																	value={el.value}
+																	isAddOn={true}
+																	totalAddOns={
+																		(getaddOnsList() || []).filter(
+																			(el) => el.isActiveAddOn
+																		).length - 1 > elIndex
+																	}
+																/>
+															);
+														}
 													)
 												}
 											</div>
@@ -265,7 +274,7 @@ const ScreenTwo = ({
 						</div>
 
 						<div className="right">
-							<div className='text-1'>₹{pricingCalculationSummary('', estimation)}</div>
+							<div className='text-1'>₹{pricingCalculationSummary('', estimation).toLocaleString('en-IN')}</div>
 
 							<div className='text-2'>per {renderTimeLabel('perLabel')}</div>
 						</div>
@@ -322,30 +331,38 @@ const Cover = ({
 	};
 
 	const downloadPDF = async () => {
-		const pdf = new jsPDF("p", "mm", "a4");
-
-		// Screen 1
-		const canvas1 = await html2canvas(screenOneRef.current);
-		const imgData1 = canvas1.toDataURL("image/png");
+		const pdf = new jsPDF("p", "mm", "a4", true); // enable compression
 
 		const imgWidth = 210; // A4 width in mm
+
+		const canvasOptions = {
+			scale: 1.5, // reduce from default (usually 2 or devicePixelRatio)
+			useCORS: true,
+			logging: false,
+		};
+
+		// ---------- Screen 1 ----------
+		const canvas1 = await html2canvas(screenOneRef.current, canvasOptions);
+
+		// Convert to JPEG instead of PNG (huge size difference)
+		const imgData1 = canvas1.toDataURL("image/jpeg", 0.7); // 0.7 = 70% quality
+
 		const imgHeight1 = (canvas1.height * imgWidth) / canvas1.width;
 
-		pdf.addImage(imgData1, "PNG", 0, 0, imgWidth, imgHeight1);
+		pdf.addImage(imgData1, "JPEG", 0, 0, imgWidth, imgHeight1, undefined, "FAST");
 
-		// Screen 2 (new page)
+		// ---------- Screen 2 ----------
 		pdf.addPage();
 
-		const canvas2 = await html2canvas(screenTwoRef.current);
-		const imgData2 = canvas2.toDataURL("image/png");
+		const canvas2 = await html2canvas(screenTwoRef.current, canvasOptions);
+		const imgData2 = canvas2.toDataURL("image/jpeg", 0.7);
+
 		const imgHeight2 = (canvas2.height * imgWidth) / canvas2.width;
 
-		pdf.addImage(imgData2, "PNG", 0, 0, imgWidth, imgHeight2);
+		pdf.addImage(imgData2, "JPEG", 0, 0, imgWidth, imgHeight2, undefined, "FAST");
 
-		const formatCompanyName = estimation.companyName.toLowerCase().split(' ').join('-');
-
-		pdf.save(`MOPID_X_${formatCompanyName}_pricing.pdf`);
-	}
+		pdf.save(`MOPID_X_${capitalizeWords(estimation.companyName, '-')}_pricing.pdf`);
+	};
 
 	useEffect(
 		() => {

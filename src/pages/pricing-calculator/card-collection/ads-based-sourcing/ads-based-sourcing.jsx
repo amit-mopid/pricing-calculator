@@ -59,7 +59,7 @@ const AdsBasedSourcing = ({
 				</div>
 
 				<div className={`summary-container__value`}>
-					₹{Boolean(estimation.adsBasedSourcing.walletAmount) ? estimation.adsBasedSourcing.walletAmount : 0}
+					₹{Boolean(estimation.adsBasedSourcing.walletAmount) ? estimation.adsBasedSourcing.walletAmount.toLocaleString('en-IN') : 0}
 				</div>
 			</div>
 		</Card>

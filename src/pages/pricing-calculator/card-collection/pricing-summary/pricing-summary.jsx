@@ -15,7 +15,7 @@ const SummaryCard = ({
 			</div>
 
 			<div className={`right-section`}>
-				₹{value}
+				₹{Math.round(value).toLocaleString('en-IN')}
 			</div>
 		</div>
 	)
@@ -54,7 +54,11 @@ const PricingSummary = ({
 		const discountPercent = data.salesDiscount.discountPercent || 0;
 		const discountAmount = (totalCost * discountPercent) / 100;
 
-		return returnType === 'DISCOUNT' ? discountAmount : totalCost - discountAmount
+		return returnType === 'DISCOUNT'
+			? discountAmount
+			: Math.round(totalCost - discountAmount).toLocaleString('en-IN');
+
+		// Math.round().toLocaleString('en-IN');
 
 	};
 
@@ -80,7 +84,7 @@ const PricingSummary = ({
 						? (
 							<SummaryCard
 								label={`Voice Calling`}
-								summaryLabel={`₹${Boolean(estimation.voiceCalling.costPerMinute) ? estimation.voiceCalling.costPerMinute : 0}/min × ${estimation.voiceCalling.totalCallDurationLimit} mins`}
+								summaryLabel={`₹${Boolean(estimation.voiceCalling.costPerMinute) ? estimation.voiceCalling.costPerMinute : 0}/min × ${Math.round(estimation.voiceCalling.totalCallDurationLimit)} mins`}
 								value={multiplication(estimation.voiceCalling.costPerMinute, estimation.voiceCalling.totalCallDurationLimit)}
 							/>
 						) : (<></>)

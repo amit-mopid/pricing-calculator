@@ -10,7 +10,7 @@ const VoiceCalling = ({
 		<Card
 			cardName={`Voice Calling`}
 			hasAddOn={true}
-			isActive={estimation.voiceCalling.activeAddOn}
+			isActive={Math.round(estimation.voiceCalling.activeAddOn)}
 			toggleAddOn={
 				() => {
 					setEstimation(
@@ -34,7 +34,7 @@ const VoiceCalling = ({
 							className={`input-container__input`}
 							type='number'
 							min={0}
-							value={estimation.voiceCalling.totalCallDurationLimit}
+							value={Math.round(estimation.voiceCalling.totalCallDurationLimit)}
 							onChange={
 								(e) => {
 									setEstimation(
@@ -83,14 +83,14 @@ const VoiceCalling = ({
 
 			<div className={`summary-container`}>
 				<div className={`summary-container__label`}>
-					Pricing for {estimation.voiceCalling.totalCallDurationLimit} minutes @ ₹{Boolean(estimation.voiceCalling.costPerMinute) ? estimation.voiceCalling.costPerMinute : 0}/minute
+					Pricing for {Math.round(estimation.voiceCalling.totalCallDurationLimit)} minutes @ ₹{Boolean(estimation.voiceCalling.costPerMinute) ? estimation.voiceCalling.costPerMinute : 0}/minute
 				</div>
 
 				<div className={`summary-container__value`}>
-					₹{Boolean(estimation.voiceCalling.costPerMinute) ? estimation.voiceCalling.costPerMinute : 0}/min × {Boolean(estimation.voiceCalling.totalCallDurationLimit) ? estimation.voiceCalling.totalCallDurationLimit : 0}mins = <span
+					₹{Boolean(estimation.voiceCalling.costPerMinute) ? Math.round(estimation.voiceCalling.costPerMinute) : 0}/min × {Boolean(estimation.voiceCalling.totalCallDurationLimit) ? Math.round(estimation.voiceCalling.totalCallDurationLimit) : 0}mins = <span
 						className={`summary-container__value__result`}
 					>
-						₹{multiplication(estimation.voiceCalling.costPerMinute, estimation.voiceCalling.totalCallDurationLimit)}
+						₹{Math.round(multiplication(estimation.voiceCalling.costPerMinute, estimation.voiceCalling.totalCallDurationLimit)).toLocaleString('en-IN')}
 					</span>
 				</div>
 			</div>

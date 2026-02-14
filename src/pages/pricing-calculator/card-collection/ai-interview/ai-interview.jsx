@@ -90,7 +90,7 @@ const AitInterview = ({
 					₹{Boolean(estimation.aiInterview.costPerMinute) ? estimation.aiInterview.costPerMinute : 0}/min × {Boolean(estimation.aiInterview.totalCallDurationLimit) ? estimation.aiInterview.totalCallDurationLimit : 0}mins = <span
 						className={`summary-container__value__result`}
 					>
-						₹{multiplication(estimation.aiInterview.costPerMinute, estimation.aiInterview.totalCallDurationLimit)}
+						₹{multiplication(estimation.aiInterview.costPerMinute, estimation.aiInterview.totalCallDurationLimit).toLocaleString('en-IN')}
 					</span>
 				</div>
 			</div>

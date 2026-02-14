@@ -190,7 +190,7 @@ const AnnualHires = ({
 					} Profiles = <span
 						className={`summary-container__value__result`}
 					>
-						₹{multiplication(estimation.annualHires.costPerProfile, multiplication(estimation.annualHires.totalYearlyHiringLimit, estimation.annualHires.profilesProcessedPerHire))}
+						₹{multiplication(estimation.annualHires.costPerProfile, multiplication(estimation.annualHires.totalYearlyHiringLimit, estimation.annualHires.profilesProcessedPerHire)).toLocaleString('en-IN')}
 					</span>
 				</div>
 			</div>
